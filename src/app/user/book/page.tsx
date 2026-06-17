@@ -53,7 +53,7 @@ const searchAddress=async (q:string,setResults:(r:Place[])=>void,restrict?:strin
       setResults([])
       return;
     }
-    const {data}=await axios.get("https://api.geoapify.com/v1/geocode/autocomplete", {
+    const {data}=await axios.get(`https://photon.komoot.io/api/?q=${encodeURIComponent(q.trim())}`, {
   params: {
     text: q.trim(),
     apiKey: process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY,
@@ -90,8 +90,11 @@ const searchAddress=async (q:string,setResults:(r:Place[])=>void,restrict?:strin
      setLocating(true)
      navigator.geolocation.getCurrentPosition(async ({coords})=>{
        try {
-        const {data}=await axios.get("https://api.geoapify.com/v1/geocode/reverse",{
+        const {data}=await axios.get("https://photon.komoot.io/reverse?lon=10&lat=52",
+          
+          {
           params:{
+            
             lat:coords.latitude,
             lon:coords.longitude,
             apiKey:process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY,
